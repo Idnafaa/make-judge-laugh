@@ -20,9 +20,13 @@ def main():
     assert "\n" not in text, "entry must be a single line"
     outdir = "/output"
     os.makedirs(outdir, exist_ok=True)
-    with open(os.path.join(outdir, "entry.txt"), "w", encoding="utf-8") as f:
+    path = os.path.join(outdir, "entry.txt")
+    with open(path, "w", encoding="utf-8") as f:
         f.write(text)
-    print(f"wrote {len(text)} chars to {outdir}/entry.txt")
+    # Read it back: the file the judge scores must be exactly the line.
+    with open(path, "r", encoding="utf-8") as f:
+        assert f.read() == text, "written entry differs from the joke"
+    print(f"wrote {len(text)} chars to {path}")
 
 
 if __name__ == "__main__":
